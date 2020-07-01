@@ -94,8 +94,8 @@ passport.use(new FacebookStrategy({
 ///                               GITHUB    AUTHENTICATION                   //////////////
 
 passport.use(new GitHubStrategy({
-    clientID: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
+    clientID: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
     callbackURL: "https://powerful-reef-36934.herokuapp.com/auth/github/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
