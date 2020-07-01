@@ -25,7 +25,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin-satyam:satyam123@cluster0-obeo5.mongodb.net/userDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.DB_LINK, {useUnifiedTopology: true, useNewUrlParser: true});
 mongoose.set("useCreateIndex", true);
 
 const userSchema = new mongoose.Schema({
@@ -64,7 +64,7 @@ passport.use(new GoogleStrategy({
     // userProfileURL: "https://www.google.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-      
+     
       
     User.findOrCreate({ googleId: profile.id, name: profile.displayName}, function (err, user) {
       return cb(err, user);
@@ -215,12 +215,15 @@ app.post("/submit", function(req, res){
 
 
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
+// let port = process.env.PORT;
+// if (port == null || port == "") {
+//   port = 3000;
+// }
 
-app.listen(port, function() {
-  console.log("Server started on port 3000");
+// app.listen(port, function() {
+//   console.log("Server started on port 3000");
+// });
+
+app.listen(3000, function(req, res){
+    console.log("running server"); 
 });
-
