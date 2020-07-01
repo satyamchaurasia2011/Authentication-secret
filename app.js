@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 app.use(session({
-    secret: "Our little secret.",
+    secret: "Thisisourliittlesecret",
     resave: false,
     saveUninitialized: false
 }));
@@ -60,7 +60,7 @@ passport.serializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets"
+    callbackURL: "https://powerful-reef-36934.herokuapp.com/auth/google/secrets"
     // userProfileURL: "https://www.google.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -215,15 +215,6 @@ app.post("/submit", function(req, res){
 
 
 
-// let port = process.env.PORT;
-// if (port == null || port == "") {
-//   port = 3000;
-// }
-
-// app.listen(port, function() {
-//   console.log("Server started on port 3000");
-// });
-
-app.listen(3000, function(req, res){
-    console.log("running server"); 
-});
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Started on 3000");
+  });
