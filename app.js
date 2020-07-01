@@ -179,7 +179,7 @@ app.get('/auth/facebook',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/secrets');
   });
 
 
