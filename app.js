@@ -9,6 +9,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 
 const app = express();
 
@@ -89,6 +90,23 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+///                               GITHUB    AUTHENTICATION                   //////////////
+
+passport.use(new GitHubStrategy({
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: "https://powerful-reef-36934.herokuapp.com/auth/github/secrets"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+
+
+
 ////////                                GET REQUESTS                               //////////
 app.get("/", function(req, res){
     res.render("home");
@@ -151,6 +169,17 @@ app.get('/auth/facebook',
    // Successful authentication, redirect secrets.
    res.redirect('/secrets');
  });
+
+ //////////////////////GITHUB/////////////////////
+ app.get('/auth/github',
+  passport.authenticate('github'));
+
+  app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 
 
