@@ -175,7 +175,7 @@ app.get('/auth/facebook',
  app.get('/auth/github',
   passport.authenticate('github'));
 
-  app.get('/auth/github/callback', 
+  app.get('/auth/github/secrets', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
